@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML基础教程 - 从入门到实践</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3f37c9;
+      --accent: #4895ef;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --success: #4cc9f0;
+      --warning: #f72585;
+      --gray: #6c757d;
+      --light-gray: #e9ecef;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: var(--dark);
+      line-height: 1.6;
+      padding-bottom: 50px;
+    }
+
+    header {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+      transform: rotate(30deg);
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .subtitle {
+      font-size: 1.4rem;
+      max-width: 800px;
+      margin: 0 auto 1.5rem;
+      opacity: 0.9;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 2rem;
+    }
+
+    nav {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      height: fit-content;
+      position: sticky;
+      top: 2rem;
+    }
+
+    nav h2 {
+      color: var(--primary);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--light-gray);
+    }
+
+    nav ul {
+      list-style: none;
+    }
+
+    nav li {
+      margin-bottom: 0.8rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--dark);
+      display: block;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateX(5px);
+    }
+
+    nav a.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .content {
+      background: white;
+      border-radius: 12px;
+      padding: 2.5rem;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .section {
+      margin-bottom: 3rem;
+      scroll-margin-top: 20px;
+    }
+
+    .section h2 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 2px solid var(--light-gray);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section h2 i {
+      background: var(--accent);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .section p {
+      margin-bottom: 1.2rem;
+      line-height: 1.8;
+    }
+
+    .note {
+      background: #e3f2fd;
+      border-left: 4px solid var(--accent);
+      padding: 1.2rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.5rem 0;
+    }
+
+    .example {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      position: relative;
+    }
+
+    .example-title {
+      position: absolute;
+      top: -12px;
+      left: 15px;
+      background: var(--primary);
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .code-block {
+      background: #2d2d2d;
+      color: #f8f8f2;
+      padding: 1.2rem;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      margin: 1.2rem 0;
+      overflow-x: auto;
+      line-height: 1.5;
+      position: relative;
+    }
+
+    .code-block::before {
+      content: "HTML";
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: #555;
+      color: white;
+      padding: 3px 10px;
+      font-size: 0.8rem;
+      border-radius: 0 0 0 5px;
+    }
+
+    .tag {
+      color: #f92672;
+    }
+
+    .attr {
+      color: #a6e22e;
+    }
+
+    .value {
+      color: #fd971f;
+    }
+
+    .comment {
+      color: #75715e;
+    }
+
+    .live-preview {
+      background: white;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+
+    .editor {
+      background: #2d2d2d;
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 2rem 0;
+    }
+
+    .editor-header {
+      background: #3d3d3d;
+      padding: 0.7rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+
+    .editor-body {
+      padding: 1rem;
+      min-height: 200px;
+    }
+
+    #html-editor {
+      width: 100%;
+      min-height: 200px;
+      background: #2d2d2d;
+      color: #f8f8f2;
+      border: none;
+      font-family: 'Courier New', monospace;
+      resize: vertical;
+      padding: 10px;
+      line-height: 1.5;
+    }
+
+    .editor-footer {
+      background: #3d3d3d;
+      padding: 0.7rem 1rem;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    button:hover {
+      background: var(--secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    #preview {
+      background: white;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      padding: 1.5rem;
+      min-height: 150px;
+      margin-top: 1rem;
+    }
+
+    .practice {
+      background: #e8f4f8;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-top: 3rem;
+      text-align: center;
+    }
+
+    .practice h3 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+    }
+
+    .card-header {
+      background: var(--primary);
+      color: white;
+      padding: 1.2rem;
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .card-body ul {
+      text-align: left;
+      padding-left: 1.5rem;
+    }
+
+    .card-body li {
+      margin-bottom: 0.8rem;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 2rem;
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        position: static;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-content">
+    <h1><i class="fab fa-html5"></i> HTML基础教程</h1>
+    <p class="subtitle">学习构建网页的核心技术 - 从基础标签到现代HTML5元素</p>
+    <p>超文本标记语言（HTML）是构建所有网站的基石</p>
+  </div>
+</header>
+
+<div class="container">
+  <nav>
+    <h2><i class="fas fa-bookmark"></i> 教程目录</h2>
+    <ul>
+      <li><a href="#intro" class="active"><i class="fas fa-home"></i> HTML简介</a></li>
+      <li><a href="#structure"><i class="fas fa-code"></i> 文档结构</a></li>
+      <li><a href="#text"><i class="fas fa-font"></i> 文本标签</a></li>
+      <li><a href="#links"><i class="fas fa-link"></i> 链接与图片</a></li>
+      <li><a href="#lists"><i class="fas fa-list"></i> 列表</a></li>
+      <li><a href="#tables"><i class="fas fa-table"></i> 表格</a></li>
+      <li><a href="#forms"><i class="fas fa-edit"></i> 表单</a></li>
+      <li><a href="#semantic"><i class="fas fa-cube"></i> 语义化标签</a></li>
+    </ul>
+  </nav>
+
+  <main class="content">
+    <section id="intro" class="section">
+      <h2><i class="fas fa-home"></i> HTML简介</h2>
+      <p><strong>HTML（超文本标记语言）</strong>是用于创建网页的标准标记语言。它不是一种编程语言，而是一种告诉浏览器如何展示内容的标记语言。</p>
+
+      <div class="note">
+        <p><strong>你知道吗？</strong> 第一个HTML规范由蒂姆·伯纳斯-李于1991年提出，最初只有18个标签。</p>
+      </div>
+
+      <h3>HTML如何工作？</h3>
+      <p>HTML由一系列元素组成，这些元素用于封装不同部分的内容，使其以特定方式显示或执行特定功能。</p>
+
+      <div class="example">
+        <div class="example-title">基础HTML元素结构</div>
+        <div class="code-block">
+          &lt;<span class="tag">tagname</span> <span class="attr">attribute</span>=<span class="value">"value"</span>&gt;内容&lt;/<span class="tag">tagname</span>&gt;
+        </div>
+      </div>
+
+      <p>HTML文档由嵌套的HTML元素构成，整个文档从<span class="tag">&lt;html&gt;</span>开始，到<span class="tag">&lt;/html&gt;</span>结束。</p>
+    </section>
+
+    <section id="structure" class="section">
+      <h2><i class="fas fa-code"></i> HTML文档结构</h2>
+      <p>每个HTML文档都有固定的基本结构：</p>
+
+      <div class="code-block">
+        &lt;!<span class="tag">DOCTYPE</span> <span class="attr">html</span>&gt;
+        &lt;<span class="tag">html</span> <span class="attr">lang</span>=<span class="value">"zh-CN"</span>&gt;
+        &lt;<span class="tag">head</span>&gt;
+        &lt;<span class="tag">meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span>&gt;
+        &lt;<span class="tag">meta</span> <span class="attr">name</span>=<span class="value">"viewport"</span> <span class="attr">content</span>=<span class="value">"width=device-width, initial-scale=1.0"</span>&gt;
+        &lt;<span class="tag">title</span>&gt;页面标题&lt;/<span class="tag">title</span>&gt;
+        &lt;/<span class="tag">head</span>&gt;
+        &lt;<span class="tag">body</span>&gt;
+        &lt;<span class="tag">h1</span>&gt;我的第一个标题&lt;/<span class="tag">h1</span>&gt;
+        &lt;<span class="tag">p</span>&gt;我的第一个段落&lt;/<span class="tag">p</span>&gt;
+        &lt;/<span class="tag">body</span>&gt;
+        &lt;/<span class="tag">html</span>&gt;
+      </div>
+
+      <div class="note">
+        <p><strong>重要标签说明：</strong></p>
+        <ul>
+          <li><strong>&lt;!DOCTYPE html&gt;</strong> - 声明文档类型</li>
+          <li><strong>&lt;html&gt;</strong> - 根元素</li>
+          <li><strong>&lt;head&gt;</strong> - 包含元数据和页面标题</li>
+          <li><strong>&lt;meta charset="UTF-8"&gt;</strong> - 设置字符编码</li>
+          <li><strong>&lt;title&gt;</strong> - 定义浏览器标签页标题</li>
+          <li><strong>&lt;body&gt;</strong> - 包含所有可见内容</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="text" class="section">
+      <h2><i class="fas fa-font"></i> 文本标签</h2>
+      <p>HTML提供了多种用于定义文本结构和含义的标签：</p>
+
+      <div class="example">
+        <div class="example-title">常用文本标签</div>
+        <div class="code-block">
+          &lt;<span class="tag">h1</span>&gt;主标题&lt;/<span class="tag">h1</span>&gt;  <span class="comment">&lt;!-- 标题标签 h1-h6 --&gt;</span>
+          &lt;<span class="tag">p</span>&gt;这是一个段落&lt;/<span class="tag">p</span>&gt;
+          &lt;<span class="tag">strong</span>&gt;重要文本&lt;/<span class="tag">strong</span>&gt; <span class="comment">&lt;!-- 粗体显示 --&gt;</span>
+          &lt;<span class="tag">em</span>&gt;强调文本&lt;/<span class="tag">em</span>&gt;   <span class="comment">&lt;!-- 斜体显示 --&gt;</span>
+          &lt;<span class="tag">br</span>&gt;            <span class="comment">&lt;!-- 换行 --&gt;</span>
+          &lt;<span class="tag">hr</span>&gt;            <span class="comment">&lt;!-- 水平线 --&gt;</span>
+        </div>
+      </div>
+
+      <div class="live-preview">
+        <h3>实际效果：</h3>
+        <h1>主标题 (h1)</h1>
+        <p>这是一个段落文本，展示HTML的文本格式化能力。</p>
+        <p><strong>这段文本很重要！</strong> 而<em>这段文本需要强调</em>。</p>
+        <p>第一行<br>第二行（使用br标签换行）</p>
+        <hr>
+        <p>水平线上方和下方的文本</p>
+      </div>
+    </section>
+
+    <section id="links" class="section">
+      <h2><i class="fas fa-link"></i> 链接与图片</h2>
+      <p>链接和图片是网页中最常用的元素：</p>
+
+      <div class="code-block">
+        <span class="comment">&lt;!-- 链接 --&gt;</span>
+        &lt;<span class="tag">a</span> <span class="attr">href</span>=<span class="value">"https://example.com"</span> <span class="attr">target</span>=<span class="value">"_blank"</span>&gt;访问示例网站&lt;/<span class="tag">a</span>&gt;
+
+        <span class="comment">&lt;!-- 图片 --&gt;</span>
+        &lt;<span class="tag">img</span> <span class="attr">src</span>=<span class="value">"image.jpg"</span> <span class="attr">alt</span>=<span class="value">"图片描述"</span> <span class="attr">width</span>=<span class="value">"300"</span>&gt;
+      </div>
+
+      <div class="note">
+        <p><strong>最佳实践：</strong></p>
+        <ul>
+          <li>始终为图片提供<code>alt</code>属性，这对可访问性和SEO很重要</li>
+          <li>使用<code>target="_blank"</code>使链接在新标签页打开</li>
+          <li>使用相对路径链接站内资源</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="lists" class="section">
+      <h2><i class="fas fa-list"></i> 列表</h2>
+      <p>HTML支持有序列表、无序列表和定义列表：</p>
+
+      <div class="example">
+        <div class="example-title">列表类型示例</div>
+        <div class="code-block">
+          &lt;<span class="tag">ul</span>&gt; <span class="comment">&lt;!-- 无序列表 --&gt;</span>
+          &lt;<span class="tag">li</span>&gt;列表项 1&lt;/<span class="tag">li</span>&gt;
+          &lt;<span class="tag">li</span>&gt;列表项 2&lt;/<span class="tag">li</span>&gt;
+          &lt;/<span class="tag">ul</span>&gt;
+
+          &lt;<span class="tag">ol</span>&gt; <span class="comment">&lt;!-- 有序列表 --&gt;</span>
+          &lt;<span class="tag">li</span>&gt;第一项&lt;/<span class="tag">li</span>&gt;
+          &lt;<span class="tag">li</span>&gt;第二项&lt;/<span class="tag">li</span>&gt;
+          &lt;/<span class="tag">ol</span>&gt;
+
+          &lt;<span class="tag">dl</span>&gt; <span class="comment">&lt;!-- 定义列表 --&gt;</span>
+          &lt;<span class="tag">dt</span>&gt;HTML&lt;/<span class="tag">dt</span>&gt;
+          &lt;<span class="tag">dd</span>&gt;超文本标记语言&lt;/<span class="tag">dd</span>&gt;
+          &lt;<span class="tag">dt</span>&gt;CSS&lt;/<span class="tag">dt</span>&gt;
+          &lt;<span class="tag">dd</span>&gt;层叠样式表&lt;/<span class="tag">dd</span>&gt;
+          &lt;/<span class="tag">dl</span>&gt;
+        </div>
+      </div>
+    </section>
+
+    <section id="tables" class="section">
+      <h2><i class="fas fa-table"></i> 表格</h2>
+      <p>表格用于展示行列数据：</p>
+
+      <div class="code-block">
+        &lt;<span class="tag">table</span>&gt;
+        &lt;<span class="tag">tr</span>&gt; <span class="comment">&lt;!-- 表行 --&gt;</span>
+        &lt;<span class="tag">th</span>&gt;姓名&lt;/<span class="tag">th</span>&gt; <span class="comment">&lt;!-- 表头 --&gt;</span>
+        &lt;<span class="tag">th</span>&gt;年龄&lt;/<span class="tag">th</span>&gt;
+        &lt;/<span class="tag">tr</span>&gt;
+        &lt;<span class="tag">tr</span>&gt;
+        &lt;<span class="tag">td</span>&gt;张三&lt;/<span class="tag">td</span>&gt; <span class="comment">&lt;!-- 表格数据 --&gt;</span>
+        &lt;<span class="tag">td</span>&gt;28&lt;/<span class="tag">td</span>&gt;
+        &lt;/<span class="tag">tr</span>&gt;
+        &lt;<span class="tag">tr</span>&gt;
+        &lt;<span class="tag">td</span>&gt;李四&lt;/<span class="tag">td</span>&gt;
+        &lt;<span class="tag">td</span>&gt;32&lt;/<span class="tag">td</span>&gt;
+        &lt;/<span class="tag">tr</span>&gt;
+        &lt;/<span class="tag">table</span>&gt;
+      </div>
+
+      <div class="live-preview">
+        <h3>表格效果：</h3>
+        <table style="width:100%; border-collapse: collapse; margin-top:1rem;">
+          <tr style="background: var(--primary); color:white;">
+            <th style="padding:10px; text-align:left;">姓名</th>
+            <th style="padding:10px; text-align:left;">年龄</th>
+            <th style="padding:10px; text-align:left;">职业</th>
+          </tr>
+          <tr style="border-bottom:1px solid #ddd;">
+            <td style="padding:10px;">张三</td>
+            <td style="padding:10px;">28</td>
+            <td style="padding:10px;">前端工程师</td>
+          </tr>
+          <tr style="border-bottom:1px solid #ddd;">
+            <td style="padding:10px;">李四</td>
+            <td style="padding:10px;">32</td>
+            <td style="padding:10px;">UI设计师</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <section id="forms" class="section">
+      <h2><i class="fas fa-edit"></i> 表单</h2>
+      <p>表单用于收集用户输入：</p>
+
+      <div class="code-block">
+        &lt;<span class="tag">form</span> <span class="attr">action</span>=<span class="value">"/submit"</span> <span class="attr">method</span>=<span class="value">"POST"</span>&gt;
+        &lt;<span class="tag">label</span> <span class="attr">for</span>=<span class="value">"name"</span>&gt;姓名:&lt;/<span class="tag">label</span>&gt;
+        &lt;<span class="tag">input</span> <span class="attr">type</span>=<span class="value">"text"</span> <span class="attr">id</span>=<span class="value">"name"</span> <span class="attr">name</span>=<span class="value">"name"</span> <span class="attr">required</span>&gt;&lt;<span class="tag">br</span>&gt;
+
+        &lt;<span class="tag">label</span> <span class="attr">for</span>=<span class="value">"email"</span>&gt;邮箱:&lt;/<span class="tag">label</span>&gt;
+        &lt;<span class="tag">input</span> <span class="attr">type</span>=<span class="value">"email"</span> <span class="attr">id</span>=<span class="value">"email"</span> <span class="attr">name</span>=<span class="value">"email"</span> <span class="attr">required</span>&gt;&lt;<span class="tag">br</span>&gt;
+
+        &lt;<span class="tag">label</span> <span class="attr">for</span>=<span class="value">"message"</span>&gt;留言:&lt;/<span class="tag">label</span>&gt;&lt;<span class="tag">br</span>&gt;
+        &lt;<span class="tag">textarea</span> <span class="attr">id</span>=<span class="value">"message"</span> <span class="attr">name</span>=<span class="value">"message"</span> <span class="attr">rows</span>=<span class="value">"4"</span>&gt;&lt;/<span class="tag">textarea</span>&gt;&lt;<span class="tag">br</span>&gt;
+
+        &lt;<span class="tag">button</span> <span class="attr">type</span>=<span class="value">"submit"</span>&gt;提交&lt;/<span class="tag">button</span>&gt;
+        &lt;/<span class="tag">form</span>&gt;
+      </div>
+    </section>
+
+    <section id="semantic" class="section">
+      <h2><i class="fas fa-cube"></i> 语义化标签 (HTML5)</h2>
+      <p>HTML5引入了语义化标签，使网页结构更清晰：</p>
+
+      <div class="code-block">
+        &lt;<span class="tag">header</span>&gt;...&lt;/<span class="tag">header</span>&gt;
+        &lt;<span class="tag">nav</span>&gt;...&lt;/<span class="tag">nav</span>&gt;
+        &lt;<span class="tag">main</span>&gt;
+        &lt;<span class="tag">article</span>&gt;
+        &lt;<span class="tag">section</span>&gt;...&lt;/<span class="tag">section</span>&gt;
+        &lt;/<span class="tag">article</span>&gt;
+        &lt;<span class="tag">aside</span>&gt;...&lt;/<span class="tag">aside</span>&gt;
+        &lt;/<span class="tag">main</span>&gt;
+        &lt;<span class="tag">footer</span>&gt;...&lt;/<span class="tag">footer</span>&gt;
+      </div>
+
+      <div class="note">
+        <p><strong>语义化标签的优点：</strong></p>
+        <ul>
+          <li>提升可访问性（屏幕阅读器）</li>
+          <li>改善SEO（搜索引擎优化）</li>
+          <li>代码更易读和维护</li>
+          <li>未来兼容性更好</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="practice">
+      <h3><i class="fas fa-laptop-code"></i> 动手实践</h3>
+      <p>在下面的编辑器中尝试编写HTML代码，实时查看效果：</p>
+
+      <div class="editor">
+        <div class="editor-header">
+          <div>HTML编辑器</div>
+          <div><i class="fas fa-code"></i></div>
+        </div>
+        <div class="editor-body">
+                        <textarea id="html-editor">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;我的第一个HTML页面&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;你好，世界！&lt;/h1&gt;
+    &lt;p&gt;这是我的第一个HTML页面。&lt;/p&gt;
+    &lt;ul&gt;
+        &lt;li&gt;HTML很有趣&lt;/li&gt;
+        &lt;li&gt;CSS让页面更美观&lt;/li&gt;
+        &lt;li&gt;JavaScript添加交互性&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+        </div>
+        <div class="editor-footer">
+          <button id="run-btn"><i class="fas fa-play"></i> 运行代码</button>
+        </div>
+      </div>
+
+      <h4>实时预览：</h4>
+      <div id="preview"></div>
+    </div>
+  </main>
+</div>
+
+<div class="practice">
+  <h3><i class="fas fa-graduation-cap"></i> 下一步学习建议</h3>
+  <div class="cards">
+    <div class="card">
+      <div class="card-header">CSS基础</div>
+      <div class="card-body">
+        <ul>
+          <li>选择器和优先级</li>
+          <li>盒模型与布局</li>
+          <li>Flexbox与Grid</li>
+          <li>响应式设计</li>
+          <li>动画与过渡</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">JavaScript入门</div>
+      <div class="card-body">
+        <ul>
+          <li>基础语法</li>
+          <li>DOM操作</li>
+          <li>事件处理</li>
+          <li>API调用</li>
+          <li>ES6+特性</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">前端框架</div>
+      <div class="card-body">
+        <ul>
+          <li>React.js</li>
+          <li>Vue.js</li>
+          <li>Angular</li>
+          <li>状态管理</li>
+          <li>组件化开发</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2023 HTML基础教程 | 通过实践学习是最好的方式！</p>
+  <p>本教程仅用于教育目的 | 使用HTML、CSS和JavaScript构建</p>
+</footer>
+
+<script>
+  document.getElementById('run-btn').addEventListener('click', function() {
+    const htmlCode = document.getElementById('html-editor').value;
+    const previewFrame = document.getElementById('preview');
+
+    // 清除之前的内容
+    previewFrame.innerHTML = '';
+
+    // 创建iframe来安全地渲染HTML
+    const iframe = document.createElement('iframe');
+    iframe.style.width = '100%';
+    iframe.style.height = '300px';
+    iframe.style.border = '1px solid #ddd';
+    iframe.style.borderRadius = '8px';
+    previewFrame.appendChild(iframe);
+
+    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+    iframeDoc.open();
+    iframeDoc.write(htmlCode);
+    iframeDoc.close();
+  });
+
+  // 初始化运行一次
+  document.getElementById('run-btn').click();
+
+  // 平滑滚动
+  document.querySelectorAll('nav a').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+
+      // 移除所有active类
+      document.querySelectorAll('nav a').forEach(a => {
+        a.classList.remove('active');
+      });
+
+      // 添加当前active类
+      this.classList.add('active');
+
+      const targetId = this.getAttribute('href');
+      const targetElement = document.querySelector(targetId);
+
+      window.scrollTo({
+        top: targetElement.offsetTop - 100,
+        behavior: 'smooth'
+      });
+    });
+  });
+</script>
+</body>
+</html>
