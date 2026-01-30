@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宇宙无敌超级好用选号系统v2.0</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+            /* 渐变蓝色背景 */
+            background: linear-gradient(135deg,
+                #1a2980 0%,
+                #26d0ce 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 背景装饰 */
+        .bg-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .circle:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 10%;
+        }
+
+        .circle:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            bottom: 15%;
+            right: 10%;
+        }
+
+        .circle:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 60%;
+            left: 20%;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 275px;
+            background-color: rgba(144, 238, 144, 0.95); /* lightgreen 半透明 */
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3),
+                        0 0 0 2px rgba(144, 238, 144, 0.3),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #006400; /* 深绿色 */
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(0, 100, 0, 0.2);
+        }
+
+        .notice {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #00008B; /* 深蓝色 */
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .entry {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #006400;
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .entry:focus {
+            outline: none;
+            border-color: #00008B;
+            box-shadow: 0 0 0 3px rgba(0, 0, 139, 0.2);
+        }
+
+        .btn {
+            width: 100%;
+            background: linear-gradient(to bottom,
+                rgba(144, 238, 144, 0.9) 0%,
+                rgba(124, 218, 124, 0.9) 100%);
+            color: #00008B;
+            border: 2px solid #006400;
+            border-radius: 8px;
+            padding: 12px 0;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 100, 0, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 100, 0, 0.3);
+            background: linear-gradient(to bottom,
+                rgba(124, 218, 124, 0.9) 0%,
+                rgba(144, 238, 144, 0.9) 100%);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(0, 100, 0, 0.2);
+        }
+
+        .output-container {
+            margin-top: 20px;
+            min-height: 80px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid rgba(0, 100, 0, 0.2);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .output {
+            text-align: center;
+            font-size: 14px;
+            color: #006400;
+            word-wrap: break-word;
+            line-height: 1.5;
+        }
+
+        .output.error {
+            color: #b22222;
+            font-weight: bold;
+        }
+
+        .output.success {
+            color: #006400;
+            font-weight: bold;
+        }
+
+        .hint {
+            text-align: center;
+            font-size: 12px;
+            color: #4682b4;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #4682b4;
+            opacity: 0.9;
+        }
+
+        /* 角色分组样式 */
+        .group-list {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #2e8b57;
+        }
+
+        .group-item {
+            margin-bottom: 8px;
+            padding: 5px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 5px;
+        }
+
+        @media (max-width: 350px) {
+            .container {
+                padding: 15px;
+            }
+            .title {
+                font-size: 14px;
+            }
+            .btn {
+                font-size: 14px;
+                padding: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景装饰 -->
+    <div class="bg-decoration">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
+
+    <div class="container">
+        <div class="title">宇宙无敌超级好用选号系统v2.0</div>
+
+        <div class="notice">请输入角色:</div>
+
+        <div class="input-group">
+            <input type="text" id="entry" class="entry" placeholder="例如: 张起灵">
+            <button id="confirmBtn" class="btn">确认</button>
+        </div>
+
+        <!-- 结果显示区域 -->
+        <div class="output-container">
+            <div id="output" class="output">等待分配……</div>
+        </div>
+
+        <!-- 提示信息 -->
+        <div class="hint">可输入的角色: 张起灵, 霍秀秀, 解雨臣, 吴邪, 王胖子, 苏万, 黑瞎子, 黎簇, 云彩</div>
+
+        <!-- 角色分组信息 -->
+        <div class="group-list">
+            <div class="group-item"><strong>第一组</strong>: 张起灵, 霍秀秀, 解雨臣 → 任务: 其他食材</div>
+            <div class="group-item"><strong>第二组</strong>: 吴邪, 王胖子, 苏万 → 任务: 买肉</div>
+            <div class="group-item"><strong>第三组</strong>: 黑瞎子, 黎簇, 云彩 → 任务: 买菜</div>
+        </div>
+
+        <div class="footer">© 网页版v2.0 | 渐变蓝色背景</div>
+    </div>
+
+    <script>
+        // 数据定义 - 与原Python代码完全一致
+        const data = [
+            [["张起灵", "霍秀秀", "解雨臣"], "其他食材"],
+            [["吴邪", "王胖子", "苏万"], "买肉"],
+            [["黑瞎子", "黎簇", "云彩"], "买菜"]
+        ];
+
+        // 配置函数 - 与原Python的config函数逻辑一致
+        function config() {
+            const input = document.getElementById('entry');
+            const output = document.getElementById('output');
+
+            const inp = input.value.trim();
+            let flag = false;
+            let outputText = "等待分配……";
+            let outputClass = "";
+
+            // 遍历data数组查找匹配的角色
+            for (let d of data) {
+                if (d[0].includes(inp)) {
+                    outputText = `抽选结果: ${d[0][0]}、${d[0][1]}、${d[0][2]}\n任务: ${d[1]}`;
+                    flag = true;
+                    outputClass = "success";
+                    break;
+                }
+            }
+
+            if (!flag) {
+                outputText = "输入不正确!";
+                outputClass = "error";
+            }
+
+            // 更新输出
+            output.textContent = outputText;
+            output.className = "output " + outputClass;
+
+            // 添加动画效果
+            output.style.transform = "scale(1.05)";
+            setTimeout(() => {
+                output.style.transform = "scale(1)";
+            }, 200);
+
+            // 清空输入框并聚焦
+            input.value = "";
+            input.focus();
+        }
+
+        // 页面初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            const entry = document.getElementById('entry');
+            const confirmBtn = document.getElementById('confirmBtn');
+
+            // 绑定按钮点击事件
+            confirmBtn.addEventListener('click', config);
+
+            // 绑定回车键事件
+            entry.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    config();
+                }
+            });
+
+            // 初始聚焦到输入框
+            entry.focus();
+
+            // 添加一些示例文本
+            entry.placeholder = "例如: 张起灵, 吴邪, 黑瞎子...";
+        });
+
+        // 添加键盘快捷键说明
+        document.addEventListener('keydown', function(event) {
+            // F1键显示帮助
+            if (event.key === 'F1') {
+                event.preventDefault();
+                alert("宇宙无敌超级好用选号系统v2.0\n\n" +
+                      "使用方法:\n" +
+                      "1. 在输入框中输入角色名\n" +
+                      "2. 点击'确认'按钮或按Enter键\n" +
+                      "3. 系统将显示该角色所在组的完整成员和任务\n\n" +
+                      "支持的角色:\n" +
+                      "• 张起灵, 霍秀秀, 解雨臣\n" +
+                      "• 吴邪, 王胖子, 苏万\n" +
+                      "• 黑瞎子, 黎簇, 云彩");
+            }
+        });
+    </script>
+</body>
+</html>
