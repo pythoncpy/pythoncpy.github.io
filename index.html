@@ -1,140 +1,15 @@
-<!--
 <!DOCTYPE html>
-<html lang="zh">
-<head>
-  <meta charset="UTF-8">
-  <title>A cool Website</title>
-</head>
-<body>
-<p>Hello World!</p>
-<p>我朋友的<a href="https://a-red-apple.github.io">网站</a></p>
-<p><a href="teach.html">html教程</a>by DeepSeek</p>
-<p><a href="main.py">main.py</a></p>
-<p><a href="selector.html">宇宙无敌超级好用选号系统v1.0</p>
-<p><a href="selector2.html"><strong>宇宙无敌超级好用选号系统v2.1</strong></p>
-<footer>copyright© 2025 <strong>pythoncpy的网站 pythoncpy.github.io</strong> All Rights Reserved</footer>
-</body>
-</html>-->
-<!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 马年快乐 · 动态渐变春节</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: "Microsoft YaHei", "华文楷体", "KaiTi", "楷体", "SimHei", sans-serif;
-            transition: background 0.2s ease; /* 让颜色变化更平滑 */
-        }
-
-        .content {
-            text-align: center;
-            color: #fff;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 100, 0, 0.5);
-            background-color: rgba(0, 0, 0, 0.1);
-            padding: 2rem 4rem;
-            border-radius: 60px;
-            backdrop-filter: blur(5px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 50px rgba(255, 200, 0, 0.3);
-            animation: glow 3s infinite alternate;
-        }
-
-        h1 {
-            font-size: clamp(3rem, 15vw, 8rem);
-            font-weight: bold;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.2em;
-            line-height: 1.2;
-        }
-
-        .sub {
-            font-size: clamp(1.5rem, 5vw, 3rem);
-            opacity: 0.9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5em;
-        }
-
-        .sub span {
-            font-size: 1.5em;
-            line-height: 1;
-        }
-
-        /* 可选的微弱光晕动画 */
-        @keyframes glow {
-            0% {
-                text-shadow: 0 0 20px gold, 0 0 40px orange;
-                border-color: rgba(255, 215, 0, 0.3);
-            }
-            100% {
-                text-shadow: 0 0 30px #ffb347, 0 0 60px #ff6b6b;
-                border-color: rgba(255, 100, 100, 0.5);
-            }
-        }
-
-        /* 底部的装饰小文字 */
-        .footer-note {
-            position: absolute;
-            bottom: 20px;
-            right: 30px;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-            background: rgba(0,0,0,0.2);
-            padding: 5px 15px;
-            border-radius: 40px;
-            backdrop-filter: blur(3px);
-        }
-    </style>
+    <title>pythoncpy's website</title>
 </head>
 <body>
-    <div class="content">
-        <h1>2026 马年快乐</h1>
-        <div class="sub">
-            <span>🐎</span> 丙午大吉 <span>🐎</span>
-        </div>
-    </div>
-    <div class="footer-note">✨ 实时渐变背景 ✨</div>
-
-    <script>
-        (function() {
-            // 获取 body 元素
-            const body = document.body;
-            let hue = 0;  // 初始色相
-
-            // 每秒更新60次（约60fps），用 requestAnimationFrame 更平滑，但 setInterval 也足够
-            function updateGradient() {
-                // 每帧色相增加 1，形成循环变化
-                hue = (hue + 0.6) % 360;  // 速度适中，数值越大变化越快
-                
-                // 生成两种颜色：主色和对比色（偏移60度）
-                const color1 = `hsl(${hue}, 85%, 65%)`;        // 饱和度稍低，更柔和
-                const color2 = `hsl(${(hue + 60) % 360}, 90%, 60%)`;
-                const color3 = `hsl(${(hue + 120) % 360}, 80%, 70%)`; // 增加第三个颜色使渐变更丰富
-                
-                // 设置渐变背景 (角度随机变化一点点也可以，但为了流畅，固定135度)
-                body.style.background = `linear-gradient(135deg, ${color1}, ${color2}, ${color3})`;
-                
-                // 使用 requestAnimationFrame 继续下一帧
-                requestAnimationFrame(updateGradient);
-            }
-
-            // 启动动画
-            requestAnimationFrame(updateGradient);
-        })();
-    </script>
+    <h1>欢迎来到pythoncpy的网站！</h1>
+    <p> <a href="teach.html">html教程 Made by DeepSeek</a></p>
+    <p>我的项目：<a href="website.html">单词听写系统(SpellMaster) 官方下载网站（开发中）</a></p>
+    <p>以前为别人做的项目: <a href="selector2.html">宇宙无敌超级好用选号系统v2.1</a>，现在留着做个纪念吧</p>
+    <p>友情链接: <a href="https://a-red-apple.github.io">https://a-red-apple.github.io</a></p>
+    <footer>copyright© 2026 <strong>pythoncpy的网站 pythoncpy.github.io</strong> All Rights Reserved</footer>
 </body>
 </html>
