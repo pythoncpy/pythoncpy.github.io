@@ -16,7 +16,6 @@
             background-color: #19191c;
             color: #efefef;
             width: 100vw;
-            height: 100vh;
         }
 
         #app {
@@ -24,14 +23,13 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            height: 100%;
         }
 
         #title {
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 7%;
+            height: 60px; /* 改为固定高度更安全 */
             width: 100%;
             background-color: #19191c;
             padding: 1rem 3%;
@@ -55,7 +53,7 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            height: 25%;
+            height: 300px; /* 修改：固定高度，避免被挤压 */
             gap: 5rem;
             background-color: #27272a;
         }
@@ -82,28 +80,137 @@
         .downloadButton:hover {
             background-color: #cfcfcf;
         }
+
+        #info-main {
+            width: 100%;
+        }
+
+        #SIA {
+            display: flex;
+            width: 100%;
+            height: auto;
+        }
+
+        #left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 40%;
+            height: auto;
+        }
+
+        .left-area {
+            font-size: 2.3rem;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-left: 2rem;
+            border-bottom: 3px solid #3d3d42;
+        }
+
+        #right {
+            display: flex;
+            flex-direction: column;
+            width: 60%;
+            height: 400vh;
+        }
+
+        #right-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #27272a;
+        }
+
+        #pictures {
+            position: relative;
+            width: 45vw;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #pictures img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.5s ease;
+            background: #333;
+        }
+
+        #pictures img.active {
+            opacity: 1;
+            transform: scale(1);
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
-    <div id="app">
-        <div id="title">
-            <div class="info">产品</div>
-            <div class="info">使用</div>
-            <div class="info">下载</div>
+<div id="app">
+    <div id="title">
+        <div class="info">产品</div>
+        <div class="info">使用</div>
+        <div class="info">下载</div>
+    </div>
+    <div id="download-main">
+        <img src="example.png" alt="logo">
+        <div id="download-info">
+            <span style="font-size: 25px">强大的单词听写机器</span>
+            <div id="download-1">
+                <button class="downloadButton" onclick="document.getElementById('downloadLink').click()">下载 MacOS 版</button>
+                <a id="downloadLink" href="/Codes/Word_Dictation_Machine.dmg" download="Word_Dictation_Machine.dmg" style="display: none"></a>
+                <button class="downloadButton" onclick="document.getElementById('downloadLink2').click()">下载 Windows 版</button>
+                <a id="downloadLink2" href="/Codes/Word_Dictation_Machine.exe" download="Word_Dictation_Machine.exe" style="display: none"></a>
+            </div>
         </div>
-        <div id="download-main">
-            <img src="example.png" alt="logo">
-            <div id="download-info">
-                <span style="font-size: 25px">强大的单词听写器</span>
-                <div id="download-1">
-                    <button class="downloadButton" onclick="document.getElementById('downloadLink').click()">下载 MacOS 版</button>
-                    <a id="downloadLink" href="/Codes/SpellMaster.dmg" download="SpellMaster.dmg" style="display: none"></a >
-                    <button class="downloadButton" onclick="document.getElementById('downloadLink2').click()">下载 Windows 版</button>
-                    <a id="downloadLink2" href="/Codes/SpellMaster.exe" download="SpellMaster.exe" style="display: none"></a >
+    </div>
+    <div id="info-main">
+        <!-- SIA: swipe-isplay-area 滑动展示区 -->
+        <div id="SIA">
+            <div id="left">
+                <div class="left-area" data-mod="0">简洁高雅的页面</div>
+                <div class="left-area" data-mod="1">极其方便的单词导入</div>
+                <div class="left-area" data-mod="2">令人舒适的听写环境</div>
+                <div class="left-area" data-mod="3">详细的错误报告</div>
+            </div>
+            <div id="right">
+                <div id="right-sticky">
+                    <div id="pictures">
+                        <img src="picture-1.png" class="active" alt="picture1">
+                        <img src="picture-2.png" alt="picture2">
+                        <img src="picture-3.png" alt="picture3">
+                        <img src="picture-4.png" alt="picture4">
+                    </div>
                 </div>
             </div>
         </div>
-        <div id="info-main"></div>
     </div>
+</div>
+
+<script>
+    const texts = document.querySelectorAll('.left-area');
+    const images = document.querySelectorAll('#pictures img');
+
+    window.addEventListener('scroll', () => {
+        let currentIdx = 0;
+        texts.forEach((el, i) => {
+            if (el.getBoundingClientRect().top < window.innerHeight / 4) currentIdx = i;
+        });
+        images.forEach((img, i) => {
+            img.classList.toggle('active', i === currentIdx);
+        });
+    });
+</script>
 </body>
 </html>
